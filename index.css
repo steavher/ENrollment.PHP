@@ -16,6 +16,30 @@ nav {
 
 }
 
+.US-section {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the images horizontally */
+    margin: 0 auto; /* Centers the elements horizontally */
+    margin-bottom: 20px; /* Adds some space between the sections */
+}
+
+.US-section img {
+    width: 150px; /* Adjust the width as needed */
+    height: 150px; /* Adjust the height as needed */
+    border-radius: 50%; /* Adds border radius to make them round */
+    overflow: hidden; /* Hides the image overflow */
+}
+
+.US-section .NOORJ img {
+	border-radius: 50%;
+}
+
+.US-section p {
+	margin: 2.5%;
+}
+
+
 .login-button{
    background-color: transparent;
    border: 1.5px solid #000000;
@@ -93,6 +117,37 @@ nav ul li a:hover {
 .contact-section {
 	background: #bfa97f;
 }
+.contact-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+.contact-section .contact-info {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.contact-section .contact-info li {
+		align-items: center;
+    margin: 0 auto;
+    justify-content: center;
+    display: flex;
+
+}
+
+.contact-section .contact-info a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.contact-section .contact-info a:hover {
+    text-decoration: underline;
+    color: 	#4fa2ed;
+}
 
 #scroll-to-top-button {
   position: fixed;
@@ -121,6 +176,8 @@ nav ul li a:hover {
 .center-text {
 	margin: 10%;
 }
+
+
 
 
 
