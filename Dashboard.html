@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Enrollment System - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="dashboard.css">
+</head>
+<body>
+
+    <label>
+        <input type="checkbox">
+        <div class="div toggle">
+            <span class="span_top common"></span>
+            <span class="span_middle common"></span>
+            <span class="span_bottom common"></span>
+        </div>
+
+        <div class="slide">
+            <h1>DASHBOARD</h1>
+            <ul>
+                <li><a href="Menu.php"><i class="fas fa-tv"></i> Menu</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="Enrollment.php"><i class="fas fa-mail-bulk"></i> Enrollment</a></li>
+                <li><a href="#"><i class="fas fa-folder-open"></i> Mail</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li> <hr><hr> <br>
+                <li><button class="log-out"><a href="../FINALIZED/ndex.php">Log Out</a></button></li>
+                <div id="dark-mode-icon" title="Toggle dark mode/light mode">
+                    <i class="fa-solid fa-toggle-on"></i>
+                </div>
+            </ul>
+            
+        </div>
+    </label>
+    <img class="kosayo" src="../FINALIZED/IMAGES/back.jpg">
+   
+<section class="service-section" id="service">
+<div class="contain">
+    <h1 class="center">MISSION</h1> <br>
+    <p class="center-text">Our enrollment system offers a seamless and secure user experience through a robust login and registration system. With user-friendly interfaces for both new and existing users, it simplifies the enrollment process, ensuring efficient and hassle-free access to educational resources. Our service prioritizes data privacy and accessibility, enhancing the overall educational experience for students and institutions alike.</p>
+</div>
+</section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>company</h4>
+                    <ul>
+                        <li><a href="../FINALIZED/index.html#about">about us</a></li>
+                        <li><a href="../FINALIZED/index.html#service">our services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </footer>
+
+    <script>
+        let darkModeIcon = document.querySelector('#dark-mode-icon');
+        let body = document.body;
+    
+
+        darkModeIcon.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+        });
+    </script>
+
+
+</body>
+</html>
