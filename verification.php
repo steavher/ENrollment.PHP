@@ -1,4 +1,98 @@
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
+session_start(); // Add session_start() to initiate or resume a session
+
+require 'vendor/autoload.php';
+
+// Database connection
+$hostname = "localhost";
+$username = "root";
+$password = "";
+$database = "phs_enrollment";
+
+// Create a connection
+$conn = new mysqli($hostname, $username, $password, $database);
+
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Function to send verification email
+function sendemail_verify($email, $verify_code)
+{
+    $mail = new PHPMailer(true);
+    try {
+        //Server settings
+        $mail->SMTPDebug = SMTP::DEBUG_OFF;                      
+        $mail->isSMTP();                                          
+        $mail->Host       = 'smtp.gmail.com';                      
+        $mail->SMTPAuth   = true;                                   
+        $mail->Username   = 'mit703843@gmail.com';                 
+        $mail->Password   = 'cznsikanzkvwpldk';                  
+        $mail->SMTPSecure = 'tls';            
+        $mail->Port       = 587;                                    
+
+        //Recipients
+        $mail->setFrom('from@example.com', 'OTP Verification');
+        $mail->addAddress($email);     
+        $mail->addReplyTo('info@example.com', 'Information');
+
+        //Content
+        $mail->isHTML(true);                                  
+        $mail->Subject = 'Welcome to Pitogo Senior High School';
+        $mail->Body    = "Your OTP for account verification is: $verify_code";
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+        $mail->send();
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+}
+
+$error = []; 
+
+// OTP verification logic
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $user_otp = $_POST["user_otp"]; 
+
+    // Check if the user_otp is not empty
+    if (!empty($user_otp)) {
+        // Query the 'accounts' table to check if the provided OTP matches
+        $query = "SELECT * FROM accounts WHERE verify_code = '$user_otp'";
+        $result = $conn->query($query);
+
+        if ($result->num_rows == 1) {
+            // OTP matched, get the user's email
+            $row = $result->fetch_assoc();
+            $user_email = $row['Email'];
+
+            // Update the 'verify' column
+            $update_query = "UPDATE accounts SET verify = 1 WHERE Email = '$user_email'";
+            if ($conn->query($update_query) === TRUE) {
+                // Send a success email to the user
+                sendemail_verify($user_email, "Your account has been verified. Please log in to continue");
+
+                // Redirect the user back to ndex.php with a success message
+                header("Location: ndex.php?message=Account has been verified. Please log in to continue");
+                exit();
+            } else {
+                $error[] = "Error updating record: " . $conn->error;
+            }
+        } else {
+            $error[] = "Incorrect OTP";
+        }
+    } else {
+        $error[] = "Please enter an OTP";
+    }
+}
+
+// Close the database connection
+$conn->close();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +102,7 @@
 </head>
 <style>
     body {
-        background-image: url("./IMAGES/FINAL.png");
+        background-image: url("FINAL.png");
         height: 100vh;
         align-items: center;
         justify-content: center;
@@ -49,18 +143,30 @@
         margin: 10px auto;
         border-radius: 12px;
     }
+
+    .error {
+            background-color: #ff6666;
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+        }
 </style>
 <body>
     <form method="post">
-        <?php if (!empty($error)) { ?>
-            <p><?php echo $error; ?></p>
+    <?php if (!empty($error)) { ?>
+    <div class="error">
+        <?php foreach ($error as $errorMessage) { ?>
+            <p><?php echo $errorMessage; ?></p>
+        <?php } ?>
+            </div>
         <?php } ?>
 
         <h1>OTP Verification</h1> <br>
         <label>Verification Code</label> <br>
         <h3>Please Input Verification Code sent to </h3> <hr><hr>
 
-        <input type="number" name="vercode">
+        <input type="number" name="user_otp" placeholder="Enter OTP"> <!-- Add input field for OTP entry -->
 
         <button type="submit">Verify OTP</button>
     </form>
