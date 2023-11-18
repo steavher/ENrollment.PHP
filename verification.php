@@ -126,6 +126,17 @@ $conn->close();
         display: flex;
     }
 
+    form img {
+        width: 80px;
+        align-items: center;
+        display: flex;
+        border: 3px solid;
+        border-color: #4fa2ed;
+        border-radius: 50px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     input {
         background: rgba(225, 225, 225, 0.5);
         display: block;
@@ -161,7 +172,7 @@ $conn->close();
         <?php } ?>
             </div>
         <?php } ?>
-
+        <img src="IMAGES/LOGO.png">
         <h1>OTP Verification</h1> <br>
         <label>Verification Code</label> <br>
         <h3>Please Input Verification Code sent to </h3> <hr><hr>
