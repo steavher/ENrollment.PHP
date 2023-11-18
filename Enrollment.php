@@ -31,6 +31,17 @@
             backdrop-filter: blur(5px);
         }
 
+        form div img {
+            width: 80px;
+            align-items: center;
+            display: flex;
+            border: 3px solid;
+            border-color: #4fa2ed;
+            border-radius: 50px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .reg-cont input,textarea,select {
             background: rgba(225, 225, 225, 0.5);
             display: block;
@@ -70,6 +81,7 @@
     
     <form action="process_registration.php" method="POST" enctype="multipart/form-data" id="registrationForm">
         <div class="reg-cont">
+            <img src="IMAGES/LOGO.png">
             <h1>Welcome to the Enrollment Process</h1>
             <p>Follow the steps below to enroll in our program:</p>
 
