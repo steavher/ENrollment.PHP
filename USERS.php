@@ -5,10 +5,11 @@
             background-color: #4fa2ed;
             box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);
             display: flex;
-            padding: 5px 2rem 12px;
+            padding: 15px 2rem 12px;
             border: solid .5px;
             border-color: #000000;
         }
+
         nav ul {
             align-items: center;
             display: flex;
@@ -26,6 +27,14 @@
             transition-duration: 300ms;
             border-bottom: 2px solid rgba(255, 68, 0, 0);
         }
+        nav div img {
+            width: 300PX;
+            border-radius: none;
+        }
+        span {
+            color: #fff;
+            bottom: 10px;
+        }
 
         nav ul li a:hover {
             color: #ffffff;
@@ -39,11 +48,24 @@
         margin-right: 16px;
         font-size: 17px;
         }
+        table {
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        th, td {
+        border: 1px solid black;
+        padding: 5px;
+        }
+
+        th {
+        background-color: #ccc;
+        }
         
 </style>
 <nav>
 		<div class="logo">
-			<img src="IMAGES/PREV.png">
+        <a href="admin_dashboard.php" ><img src="IMAGES/LOGOS.png"></a>
 		</div>
 				<ul>
 
@@ -57,5 +79,33 @@
             <div class="header">Welcome!! Have a nice day.</div>
             <!-- Rest of your content goes here -->
         </div>
+        <?php
+
+// Connect to the database.
+$db = new PDO('mysql:host=localhost;dbname=my_database', 'root', '');
+
+// Get all of the users from the database.
+$users = $db->query('SELECT * FROM accounts');
+
+// Start the HTML table.
+echo '<table>';
+
+// Create the table header row.
+echo '<tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th></tr>';
+
+// Loop through all of the users and add them to the table.
+foreach ($users as $user) {
+    echo '<tr>';
+    echo '<td>' . $user['id'] . '</td>';
+    echo '<td>' . $user['name'] . '</td>';
+    echo '<td>' . $user['email'] . '</td>';
+    echo '<td>' . $user['role'] . '</td>';
+    echo '</tr>';
+}
+
+// Close the HTML table.
+echo '</table>';
+
+?>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
