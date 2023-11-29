@@ -1,4 +1,10 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <style>
      nav {
             justify-content: space-between;
@@ -63,9 +69,12 @@
         }
         
 </style>
+</head>
+<body>
+    
 <nav>
 		<div class="logo">
-        <a href="admin_dashboard.php" ><img src="IMAGES/LOGOS.png"></a>
+        <a href="admin_dashboard.php" ><img src="../IMAGES/LOGOS.png"></a>
 		</div>
 				<ul>
 
@@ -79,33 +88,41 @@
             <div class="header">Welcome!! Have a nice day.</div>
             <!-- Rest of your content goes here -->
         </div>
-        <?php
+        <table id="example" class="table table-striped table-bordered" style="width:65%"> 
+            
+        </table>
+        <!-- <?php
 
-// Connect to the database.
-$db = new PDO('mysql:host=localhost;dbname=my_database', 'root', '');
+// // Connect to the database.
+// $db = new PDO('mysql:host=localhost;dbname=my_database', 'root', '');
 
-// Get all of the users from the database.
-$users = $db->query('SELECT * FROM accounts');
+// // Get all of the users from the database.
+// $users = $db->query('SELECT * FROM accounts');
 
-// Start the HTML table.
-echo '<table>';
+// // Start the HTML table.
+// echo '<table>';
 
-// Create the table header row.
-echo '<tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th></tr>';
+// // Create the table header row.
+// echo '<tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th></tr>';
 
-// Loop through all of the users and add them to the table.
-foreach ($users as $user) {
-    echo '<tr>';
-    echo '<td>' . $user['id'] . '</td>';
-    echo '<td>' . $user['name'] . '</td>';
-    echo '<td>' . $user['email'] . '</td>';
-    echo '<td>' . $user['role'] . '</td>';
-    echo '</tr>';
-}
+// // Loop through all of the users and add them to the table.
+// foreach ($users as $user) {
+//     echo '<tr>';
+//     echo '<td>' . $user['id'] . '</td>';
+//     echo '<td>' . $user['name'] . '</td>';
+//     echo '<td>' . $user['email'] . '</td>';
+//     echo '<td>' . $user['role'] . '</td>';
+//     echo '</tr>';
+// }
 
 // Close the HTML table.
-echo '</table>';
+// echo '</table>';
 
-?>
+?> -->
     </div>
+
+</body>
+</html>
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
