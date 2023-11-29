@@ -3,7 +3,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-session_start(); // Add session_start() to initiate or resume a session
+session_start(); 
+
 
 require 'vendor/autoload.php';
 
@@ -77,8 +78,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 sendemail_verify($user_email, "Your account has been verified. Please log in to continue");
 
                 // Redirect the user back to ndex.php with a success message
-                header("Location: ndex.php?message=Account has been verified. Please log in to continue");
+                $_SESSION['success_message'] = "Account has been verified. Please log in to continue";
+                header("Location: ndex.php");
+                
                 exit();
+                
             } else {
                 $error[] = "Error updating record: " . $conn->error;
             }
@@ -102,7 +106,9 @@ $conn->close();
 </head>
 <style>
     body {
-        background-image: url("FINAL.png");
+        background-image: url("../FINALIZED/IMAGES/PSHS.jpeg");
+        background-repeat: no-repeat;
+        background-size: cover;
         height: 100vh;
         align-items: center;
         justify-content: center;
@@ -156,12 +162,18 @@ $conn->close();
     }
 
     .error {
-            background-color: #ff6666;
-            color: white;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 20px;
-        }
+        background-color: #ff6666;
+        color: white;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 20px;
+    }
+
+    b {
+        display: grid;
+        align-items: center;
+    }
+
 </style>
 <body>
     <form method="post">
@@ -175,11 +187,12 @@ $conn->close();
         <img src="IMAGES/LOGO.png">
         <h1>OTP Verification</h1> <br>
         <label>Verification Code</label> <br>
-        <h3>Please Input Verification Code sent to </h3> <hr><hr>
+        <h3>Please Input Verification Code sent to </h3><span style="display:block; text-align:center;"> <b><?php echo $_SESSION['email']; ?></span></b> <hr><hr> <br>
 
         <input type="number" name="user_otp" placeholder="Enter OTP"> <!-- Add input field for OTP entry -->
 
         <button type="submit">Verify OTP</button>
     </form>
+
 </body>
 </html>
