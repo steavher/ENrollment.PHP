@@ -21,7 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <style>
      nav {
             justify-content: space-between;
@@ -108,9 +114,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
         
 </style>
+</head>
+<body>
+  
 <nav>
 		<div class="logo">
-        <a href="admin_dashboard.php" ><img src="IMAGES/LOGOS.png"></a>
+        <a href="admin_dashboard.php" ><img src="../IMAGES/LOGOS.png"></a>
 		</div>
 				<ul>
 
@@ -134,26 +143,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         ?>
 
-<div class="profile-container">
+    <div class="profile-container">
     <h1>User Profile</h1>
 
     <img src="https://placehold.it/100x100" alt="Profile picture">
 
     <form action="/USER_PROFILE" method="post">
 
-      
-<input type="text" name="username" placeholder="Username">
+    <input type="text" name="username" placeholder="Username">
+ 
+    <input type="password" name="password" placeholder="Password">
 
       
-<input type="password" name="password" placeholder="Password">
-
-      
-<input type="file" name="profile_picture">
-      <button type="submit">Update Profile</button>
+    <input type="file" name="profile_picture">
+    <button type="submit">Update Profile</button>
     </form>
-  </div>
-    </div>
 
-        </div>
+      </div>
     </div>
+  </div>
+  </div>
+
+</body>
+</html>
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
