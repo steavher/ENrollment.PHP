@@ -6,6 +6,7 @@ $errors = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_type = "Student";
     $email = $_POST['email'];
+    $_SESSION['email'] = $email;
     $password = $_POST['password'];
     $cspassword = $_POST['cspassword'];
 
@@ -63,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Register Form</title>
     <link rel="stylesheet" href="css/Register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> 
     <style>
         .error-block {
             background-color: #ff6666;
@@ -70,6 +72,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 20px;
+        }
+         /* Add some styling for the eye icon */
+         .password-container {
+            position: relative;
+        }
+
+        .eye-icon {
+            position: absolute;
+            top: 50%;
+            right: 50px;
+            transform: translateY(-50%);
+            cursor: pointer;
         }
     </style>
 </head>
@@ -88,11 +102,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <img src="IMAGES/LOGO.png">
             <h1>Register Now</h1><br>
             <input type="email" name="email" required placeholder="Enter your email">
-            <input type="password" name="password" required placeholder="Enter your password">
-            <input type="password" name="cspassword" required placeholder="Confirm your password">
+            <div class="password-container">
+                <input type="password" name="password" id="password" required placeholder="Enter your password">
+                <i class="eye-icon" onclick="togglePassword('password')"><i id="password-icon" class="far fa-eye"></i></i>
+            </div>
+            
+            <!-- Confirm Password input with font awesome eye icon -->
+            <div class="password-container">
+                <input type="password" name="cspassword" id="cspassword" required placeholder="Confirm your password">
+                <i class="eye-icon" onclick="togglePassword('cspassword')"><i id="cspassword-icon" class="far fa-eye"></i></i>
+            </div>
             <button type="submit">Register</button>
-            <p>Already have an account? <a href="index.php">Sign In</a></p>
+            <p>Already have an account? <a href="ndex.php">Sign In</a></p>
         </div>
     </form>
+    <script>
+        function togglePassword(inputId) {
+            var x = document.getElementById(inputId);
+            var icon = document.getElementById(inputId + "-icon");
+
+            if (x.type === "password") {
+                x.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                x.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    </script>
 </body>
 </html>
