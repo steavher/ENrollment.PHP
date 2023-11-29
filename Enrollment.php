@@ -9,13 +9,14 @@
             box-sizing: border-box;
         }
         body {
-            height: 100vw;
+            min-height: 100vh;
             align-items: center;
             display: flex;
             justify-content: center;
-            background-image: url(FINAL.png);
+            background-image: url("../IMAGES/PSHS.jpeg");
             background-repeat: no-repeat;
             background-size: cover;
+            overflow-y: auto;
         }
 
         form {
@@ -64,6 +65,20 @@
             border-radius: 12px;
         }
 
+        .new button {
+            background-color: #4fa2ed;
+            display: block;
+            width: 50%;
+            padding: 10px;
+            margin: 10px auto;
+            border-radius: 12px;
+
+        }
+
+        .requirementsSection .new {
+            margin-top: 20px;
+        }
+
         @media(max-width: 767px){
             .footer-col{
                 width: 50%;
@@ -78,22 +93,26 @@
     </style>
 </head>
 <body>
+
     
     <form action="process_registration.php" method="POST" enctype="multipart/form-data" id="registrationForm">
+
         <div class="reg-cont">
-            <img src="IMAGES/LOGO.png">
-            <h1>Welcome to the Enrollment Process</h1>
+            <img src="../IMAGES/LOGO.png">
+            <h2>Welcome to the Enrollment Process</h2>
             <p>Follow the steps below to enroll in our program:</p>
 
             <h2>Registration Form:</h2>
-            
+            <label for="First_name">First Name:</label>
             <input type="text" id="first_name" placeholder="First Name" name="first_name" required><br>
-
+            <label for="Middle_name">Middle Name:</label>
             <input type="text" id="middle_name" placeholder="Middle Name" name="middle_name"><br>
-
+            <label for="Last_name">Last Name:</label>
             <input type="text" id="last_name" placeholder="Last Name" name="last_name" required><br>
-
+            <label for="Age">Age:</label>
             <input type="number" id="age" placeholder="Age" name="age" required><br>
+            <label for="Parents">Parents Name / Guardians Name:</label>
+            <input type="text" id="guardian" placeholder="Parent/Guardian Name" name="Parents/Guardian" required> <br>
 
             <label for="address">Address:</label>
             <textarea id="address" name="address" rows="4" required></textarea><br>
@@ -112,8 +131,8 @@
             <select id="course" name="course" required>
                 <option value="ABM">ABM (Accountancy, Business, and Management)</option>
                 <option value="STEM">STEM (Science, Technology, Engineering, and Mathematics)</option>
-                <option value="TVL">TVL (Technical-Vocational-Livelihood)</option>
-                <option value="GAS">GAS (General Academic Strand)</option>
+                <option value="HUMSS">HUMMS (Humanities and Social Sciences)</option>
+                
             </select><br>
 
             <label for="email">Email Address:</label>
@@ -126,25 +145,20 @@
         <form class="new">
             <h2>Requirements:</h2>
             <ul>
-                <li>High school diploma or equivalent</li>
-                <li>Valid government-issued ID</li>
-                <li>Payment method for the enrollment fee</li>
                 <li>Original Report Card (Form 138)</li>
                 <li>Permanent Record (Form 137)</li>
                 <li>Certificate of Good Moral</li>
-                <li>2 pcs. 1x1 Colored ID picture</li>
                 <li>NSO Birth Certificate (Photocopy)</li>
             </ul>
 
             <label for="file_upload">Upload Documents:</label>
             <input type="file" id="file_upload" name="file_upload" multiple><br>
 
-            <input type="submit" value="Submit">
+            <button id="SUBMIT" type="submit">Submit</button>
 
             <ol id="stepsList" class="hidden">
                 <li>Complete the online application form.</li>
                 <li>Upload your documents, including transcripts and ID.</li>
-                <li>Pay the enrollment fee.</li>
                 <li>Wait for confirmation of enrollment via email.</li>
             </ol>
         </form>
