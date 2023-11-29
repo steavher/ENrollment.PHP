@@ -1,9 +1,13 @@
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js"></script>
-
-<style>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>STUDENTS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js"></script>
+    <style>
     table {
        
         margin-top: 10%;
@@ -127,9 +131,12 @@
 
         
 </style>
+</head>
+<body>
+    
 <nav>
 		<div class="logo">
-        <a href="admin_dashboard.php" ><img src="IMAGES/LOGOS.png"></a>
+        <a href="admin_dashboard.php" ><img src="../IMAGES/LOGOS.png"></a>
 		</div>
 				<ul>
 
@@ -149,12 +156,12 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <div class="div"></div>
-<table id="example" class="table table-striped table-bordered" style="width:80%"> 
+        <table id="example" class="table table-striped table-bordered" style="width:65%"> 
     <tr>
         <th>Student Roll</th>
         <th>Student Name</th>
         <th>Age</th>
-        <th>Email</th>
+        <th>Time Enrolled</th>
         <th>Academic Track</th>
         <th>Actions</th>
         
@@ -173,20 +180,39 @@
     <!-- Repeat the above row for each student -->
 </table>
 
+</body>
+</html>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const approveButton = document.getElementById('approve-button');
     const deleteButton = document.getElementById('delete-button');
 
     approveButton.addEventListener('click', () => {
+  // Show the first confirmation dialog
+  Swal.fire({
+    title: 'Are you sure you want to approve this Student?',
+    text: 'This action cannot be undone.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, Approve it!',
+    cancelButtonText: 'No, cancel'
+  }).then((result) => {
+    // Check if the user clicked the confirm button
+    if (result.isConfirmed) {
+      // Show the second success message
       Swal.fire({
         title: 'Student Approved!',
-        text: 'The Student was successfully approved.',
+        text: 'The Student was successfully Approved.',
         icon: 'success',
         confirmButtonText: 'Close',
       });
-    });
-
+    }
+  });
+});
     deleteButton.addEventListener('click', () => {
       Swal.fire({
         title: 'Are you sure you want to delete this Student?',
@@ -210,4 +236,3 @@
     });
 
   </script>
-
