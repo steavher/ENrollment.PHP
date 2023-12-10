@@ -45,14 +45,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = mysqli_real_escape_string($conn, $_POST['password']);
 
         // Check for specific email addresses to redirect to the admin dashboard
-        $adminEmails = array('phs_admin', 'phs_admin1', 'phs_admin2');
+        $query = "SELECT email FROM accounts WHERE user_type = 'Admin'";
+        $result = mysqli_query($conn, $query);
+        
+        if (!$result) {
+            die("Query failed: " . mysqli_error($conn));
+        }
+        
+        $adminEmails = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $adminEmails[] = $row['email'];
+        }
+        
+        // Check if the email is in the array of admin emails
         if (in_array($email, $adminEmails)) {
             // For admin email addresses, check the password directly
             $adminPassword = getPasswordForAdminEmail($email, $conn);
         
             if (password_verify($password, $adminPassword)) {
                 // Redirect to the admin dashboard
-                header("Location: INITIAL_DASHBOARD/admin_dashboard.php");
+                header("Location: admin_dashboard.php");
                 exit();
             } else {
                 // Incorrect password for admin email
@@ -84,7 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $_SESSION['message'] = "Account not yet verified, please verify to log in";
                     } else {
                         // Redirect to the user's dashboard
-                        header("Location: INITIAL_DASHBOARD/dashboard.html");
+                        $_SESSION['user_email'] = $email;  // Store user's email in session
+                        header("Location: Dashboard.php");
                         exit();
                     }
                 } else {
@@ -122,12 +135,20 @@ $recaptchaSiteKey = ($_SERVER['HTTP_HOST'] === 'localhost') ? '6Ldx_AkpAAAAAESRH
 ';
 ?>
 <?php
-// Check for success message in the session
-if (isset($_SESSION['success_message'])) {
-    $successMessage = $_SESSION['success_message'];
+//Check for success message in the session
+// if (isset($_SESSION['message'])) {
+//     echo '<div class="error-block">';
+//     echo '<p>' . $_SESSION['message'] . '</p>';
+//     echo '</div>';
 
-    // Clear the session variable
-    unset($_SESSION['success_message']);
+//     unset($_SESSION['message']);
+// }
+
+    if (isset($_SESSION['success_message'])) {
+        $successMessage = $_SESSION['success_message'];
+    
+        // Clear the session variable
+        unset($_SESSION['success_message']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,13 +195,20 @@ if (isset($_SESSION['success_message'])) {
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div class="login-container">
             <?php
-            if (!empty($errors)) {
+            if (isset($_SESSION['message'])) {
                 echo '<div class="error-block">';
-                foreach ($errors as $errorMsg) {
-                    echo '<p>' . $errorMsg . '</p>';
-                }
+                echo '<p>' . $_SESSION['message'] . '</p>';
                 echo '</div>';
+            
+                unset($_SESSION['message']);
             }
+            // if (!empty($errors)) {
+            //     echo '<div class="error-block">';
+            //     foreach ($errors as $errorMsg) {
+            //         echo '<p>' . $errorMsg . '</p>';
+            //     }
+            //     echo '</div>';
+            // }
             ?>
             <img src="images/LOGO.png">
 
@@ -300,13 +328,20 @@ if (isset($_SESSION['success_message'])) {
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div class="login-container">
             <?php
-            if (!empty($errors)) {
+            if (isset($_SESSION['message'])) {
                 echo '<div class="error-block">';
-                foreach ($errors as $errorMsg) {
-                    echo '<p>' . $errorMsg . '</p>';
-                }
+                echo '<p>' . $_SESSION['message'] . '</p>';
                 echo '</div>';
+            
+                unset($_SESSION['message']);
             }
+            // if (!empty($errors)) {
+            //     echo '<div class="error-block">';
+            //     foreach ($errors as $errorMsg) {
+            //         echo '<p>' . $errorMsg . '</p>';
+            //     }
+            //     echo '</div>';
+            // }
             ?>
             <img src="images/LOGO.png">
 
