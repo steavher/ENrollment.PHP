@@ -12,6 +12,7 @@ if (isset($_POST['logout'])) {
     exit();
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -49,9 +50,8 @@ if (isset($_POST['logout'])) {
         <div class="slide">
                 <h1>MENU</h1>
                 <ul>
-                    <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="Student_Profile.php"><i class="fas fa-user"></i> Profile</a></li>
                     <li><a href="Enrollment.php"><i class="fas fa-mail-bulk"></i> Enrollment</a></li>
-                    <li><a href="#"><i class="fas fa-folder-open"></i> Mail</a></li>
                     <div class="logged-in-block">
                     Logged in using <span class="user-email"><?php echo $_SESSION['user_email']; ?></span> <br>
                     </div>
@@ -71,9 +71,16 @@ if (isset($_POST['logout'])) {
 <section class="service-section" id="service">
 <div class="contain">
     <h1 class="center">MISSION</h1> <br>
-    <p class="center-text">Our enrollment system offers a seamless and secure user experience through a robust login and registration system. With user-friendly interfaces for both new and existing users, it simplifies the enrollment process, ensuring efficient and hassle-free access to educational resources. Our service prioritizes data privacy and accessibility, enhancing the overall educational experience for students and institutions alike.</p>
+    <p class="center-text">The Makati City Government will be the model for world-class local governance: providing for the well - being of its citizenry through the delivery of the highest level of basic, social and economic services with breakthrough technologies sustanaible financing, and competent, responsible and professional servants. </p>
 </div>
 </section>
+<section class="vision-section" id="service">
+<div class="contain">
+    <h1 class="center">VISION</h1> <br>
+    <p class="center-text">Makati shall lead the Philippines into the 21st century: its global and national enterprises, leading the creation of a new, responsible and sustainable economy; its citizens, productive, empowered and God loving.</p>
+</div>
+</section>
+
 
     <footer class="footer">
         <div class="container">
