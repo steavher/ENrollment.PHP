@@ -1,5 +1,26 @@
+<?php
+session_start();
 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "phs_enrollment";
 
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT COUNT(*) AS num_students FROM names";
+$result = $conn->query($sql);
+$students_count = $result->fetch_assoc()['num_students'];
+
+$sql = "SELECT COUNT(*) AS num_users FROM accounts"; 
+$result = $conn->query($sql);
+$users_count = $result->fetch_assoc()['num_users'];
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +30,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="admin_dashboard.css">
     <style>
+
+        body {
+            color: #fff;
+        }
+
         .dashboard-panel {
             margin-left: 15rem;
             display: flex;
@@ -22,8 +48,9 @@
         }
 
         .dashboard-card {
+            border: solid 2px #000;
             margin-left: 15rem;
-            margin-top: 15rem;
+            margin-top: 9rem;
             display: flex;
             flex-direction: column;
             align-items: center; /* Vertically center the content */
@@ -32,8 +59,7 @@
             padding: 20px;
             border-radius: 5px;
             text-align: center;
-            box-shadow: none; /* Remove the box shadow */
-            border: none; /* Remove the border */
+            
         }
 
         .dashboard-card h2 {
@@ -76,6 +102,11 @@
             color: #ffffff;
             border-bottom: 2px solid #ffffff;
         }
+
+        nav div img {
+            width: 300px;
+            border-radius: none;
+        }
         input[type=text] {
         float: right;
         padding: 6px;
@@ -88,16 +119,16 @@
 </head>
 
 <body>
-<nav>
+<!-- <nav>
 		<div class="logo">
-			<img src="IMAGES/PREV.png">
+			<img src="../IMAGES/LOGOS.png">
 		</div>
 				<ul>
 
 					<li> <input type="text" placeholder="Search" > </li>
 
 				</ul>
-	</nav>
+	</nav> -->
     <div class="wrapper">
         <?php include('sidebar.php');  ?>
         <div class="main_content">
@@ -111,11 +142,11 @@
     <div class="dashboard-panel">
         <div class="dashboard-card">
             <h2><i class="fas fa-user"></i><br>Total Students</h2>
-            <p>100</p> <!-- Replace with the actual total number of students -->
+            <p><?php echo $students_count; ?></p> <!-- Replace with the actual total number of students -->
         </div>
         <div class="dashboard-card">
             <h2><i class="fas fa-address-card"></i><br>Total Users</h2>
-            <p>50</p> <!-- Replace with the actual total number of users -->
+            <p><?php echo $users_count; ?></p> <!-- Replace with the actual total number of users -->
         </div>
     </div>
 
@@ -124,6 +155,7 @@
 
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 
 </body>
