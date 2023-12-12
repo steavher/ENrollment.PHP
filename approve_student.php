@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 if (isset($_GET['lrn'])) {
     $lrn = $_GET['lrn'];
 
+    
     // Update the status to "Approved"
     $updateQuery = "UPDATE names SET status = 'Approved' WHERE lrn = $lrn";
 
