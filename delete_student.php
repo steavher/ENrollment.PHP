@@ -17,12 +17,12 @@ if (isset($_GET['lrn'])) {
     $lrn = $_GET['lrn'];
 
     // Prepare and execute the SQL query to delete the student
-    $deleteQuery = "DELETE FROM names WHERE lrn = $lrn";
+    $updateQuery = "UPDATE names SET status = 'Declined' WHERE lrn = $lrn";
 
-    if ($conn->query($deleteQuery) === TRUE) {
-        $_SESSION['success_message'] = "Student deleted successfully.";
+    if ($conn->query($updateQuery) === TRUE) {
+        $_SESSION['success_message'] = "Student Declined successfully.";
     } else {
-        $_SESSION['error_message'] = "Error deleting student: " . $conn->error;
+        $_SESSION['error_message'] = "Error Declining student: " . $conn->error;
     }
 
     // Redirect back to the page where the deletion was initiated
