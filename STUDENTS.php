@@ -174,6 +174,9 @@ if (isset($_GET['lrn']) && isset($_GET['action'])) {
         .approved {
         color: #008000;
         }
+	.declined {
+	color: #ff0000;
+	}
         
         .success-message {
         background-color: #d4edda;
