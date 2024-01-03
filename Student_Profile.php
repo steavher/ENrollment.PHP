@@ -11,29 +11,28 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-if (!isset($_SESSION['current_lrn'])) {
-  // Redirect to enrollment.php or any other page if LRN is not set
-  header("Location: Enrollment.php");
+
+if (isset($_SESSION['user_email'])) {
+  $email = $_SESSION['user_email'];
+
+  $sql = "SELECT e.lrn, e.fname, e.mname, e.lname, e.year_level, e.strand, e.age, i.pname, i.birthdate, i.gender, e.status
+          FROM names e
+          JOIN student_info i ON e.lrn = i.lrn
+          WHERE e.email = '$email'"; 
+
+  $result = mysqli_query($conn, $sql);
+} else {
+  echo "Email not found in session.";
+  
   exit();
-}
-
-$current_lrn = $_SESSION['current_lrn'];
-
-$sql = "SELECT e.lrn, e.fname, e.mname, e.lname, e.year_level, e.strand, e.age, i.pname, i.birthdate, i.gender, e.status
-        FROM names e
-        JOIN student_info i ON e.lrn = i.lrn
-        WHERE e.lrn = '$current_lrn'";
-
-$result = mysqli_query($conn, $sql);
-    
-
-$result = mysqli_query($conn, $sql);    
+}  
 
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Student Profile</title>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
