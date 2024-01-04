@@ -25,7 +25,7 @@ if ($conn->connect_error) {
 }
 
 // SQL query to select all columns from your admin_users table
-$sql = "SELECT user_type, email, created_at FROM accounts WHERE user_type = 'Admin'";
+$sql = "SELECT account_Id, user_type, email, created_at FROM accounts WHERE user_type = 'Admin'";
 
 // Execute the query
 $result = $conn->query($sql);
@@ -180,17 +180,7 @@ $conn->close();
 </style>
 </head>
 <body>
-    
-<!-- <nav>
-		<div class="logo">
-        <a href="admin_dashboard.php" ><img src="../IMAGES/LOGOS.png"></a>
-		</div>
-				<ul>
 
-					<li> <input type="text" placeholder="Search" > </li>
-
-				</ul>
-	</nav> -->
     <?php 
     if (isset($_SESSION['success_message'])) {
         echo "<script>
@@ -246,13 +236,25 @@ $conn->close();
         // Output table rows based on the database data
         foreach ($adminUsers as $adminUser) {
             echo "<tr>";
-            foreach ($adminUser as $value) {
+            foreach ($adminUser as $key => $value) {
                 echo "<td>$value</td>";
             }
-            // Add buttons for each row
-            echo '<td>
-                        <button class="del-button delete-button"><a href="delete_admin.php"><span>Delete</span></a></button>
-                  </td>';
+        
+            // Check if the 'account_Id' key exists in the $adminUser array
+            if (array_key_exists('account_Id', $adminUser)) {
+                // Extract the 'account_Id' value from the $adminUser array
+                $adminId = $adminUser['account_Id'];
+                
+                // Add a button with a data-account-id attribute
+                echo '<td>
+                          <button class="del-button delete-button" data-account-id="' . $adminId . '">
+                              <a href="delete_admin.php"><span>Delete</span></a>
+                          </button>
+                      </td>';
+            } else {
+                echo '<td>Error: account_Id key not found</td>';
+            }
+        
             echo "</tr>";
         }
         ?>
@@ -270,50 +272,31 @@ $conn->close();
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    const deleteButtons = document.querySelectorAll('.delete-button');
+   const deleteButtons = document.querySelectorAll('.delete-button');
 
     deleteButtons.forEach(deleteButton => {
-        deleteButton.addEventListener('click', () => {
+        deleteButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the default behavior of the link
+            
+            const adminId = deleteButton.getAttribute('data-account-id');
+            
             Swal.fire({
-                title: 'Are you sure you want to delete this Admin?',
-                text: 'This action cannot be undone.',
+                title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel',
+                cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Get the admin ID or any unique identifier for the admin to be deleted
-                    const adminId = deleteButton.getAttribute('data-admin-id');
-
-                    // Make an AJAX request to the server to delete the admin
-                    $.ajax({
-                        url: 'delete_admin.php',
-                        type: 'GET',
-                        data: { Admin: adminId },
-                        success: function (response) {
-                            Swal.fire({
-                                title: 'Admin Deleted!',
-                                text: 'The Admin was successfully deleted.',
-                                icon: 'success',
-                                confirmButtonText: 'Close',
-                            });
-
-                            // Here you can add additional logic if needed
-                        },
-                        error: function () {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: 'An error occurred while processing your request.',
-                                icon: 'error',
-                                confirmButtonText: 'Close',
-                            });
-                        }
-                    });
+                    // Redirect to delete_admin.php with the admin ID
+                    window.location.href = 'delete_admin.php?Admin=' + adminId;
                 }
             });
         });
     });
-</script>
+
+
+    </script>
