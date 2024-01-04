@@ -8,38 +8,37 @@ $dbname = "phs_enrollment";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if (isset($_GET['account_Id'])) {
-    // Get the adminId from the $_GET parameters
-    $adminId = $_GET['account_Id'];
+// Check if the Admin parameter is set in the query string
+if (isset($_GET['Admin'])) {
+    $adminId = $_GET['Admin'];
 
-    // Check if the adminId is a valid integer
-    if (!is_numeric($adminId)) {
-        $_SESSION['error_message'] = "Invalid admin ID.";
-        header("Location: USERS.php");
-        exit();
-    }
+    // Perform the deletion based on the admin ID
+    $sql = "DELETE FROM accounts WHERE account_Id = '$adminId'";
+    $result = $conn->query($sql);
 
-    // Prepare and execute the SQL query to delete the admin user
-    $deleteQuery = "DELETE FROM accounts WHERE id = $adminId";
-
-    if ($conn->query($deleteQuery) === TRUE) {
-        $_SESSION['success_message'] = "Admin user deleted successfully.";
+    if ($result) {
+        // set success message
+        $_SESSION['success_message'] = "Admin deleted successfully.";
     } else {
-        $_SESSION['error_message'] = "Error deleting admin user: " . $conn->error;
+        // set error message
+        $_SESSION['error_message'] = "Error deleting admin: " . $conn->error;
     }
 
-    // Redirect back to the page where the deletion was initiated
+    // Redirect back to the page displaying admin users
     header("Location: USERS.php");
     exit();
 } else {
-    $_SESSION['error_message'] = "Admin ID not provided.";
+    // Admin parameter not set, handle accordingly (e.g., show an error message)
+    $_SESSION['error_message'] = "Admin ID not provided for deletion.";
     header("Location: USERS.php");
     exit();
 }
 
+// Close the database connection
 $conn->close();
 ?>
