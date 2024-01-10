@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 if (isset($_SESSION['user_email'])) {
   $email = $_SESSION['user_email'];
 
-  $sql = "SELECT e.lrn, e.fname, e.mname, e.lname, e.year_level, e.strand, e.age, i.pname, i.birthdate, i.gender, e.status
+  $sql = "SELECT e.lrn, e.fname, e.mname, e.lname, e.year_level, e.Message, e.strand, e.age, i.pname, i.birthdate, i.gender, e.status
           FROM names e
           JOIN student_info i ON e.lrn = i.lrn
           WHERE e.email = '$email'"; 
@@ -132,23 +132,33 @@ if (isset($_SESSION['user_email'])) {
     <!-- <hr> -->
     </div>
     <div class="status">
-            <h2>Enrollment Status</h2>
+            <h2>APPROVAL FORM STATUS</h2>
             <?php
               if ($row['status'] === 'Approved') {
                   echo '<div style="background-color: #00AB41; border: 1px solid #c3e6cb; color: #fff; padding: 15px; margin-bottom: 15px;">
-                            <strong>Success:</strong> Your enrollment form has been successfully approved.
+                            <strong>Success:</strong> Your Application form has been successfully approved.
                         </div>';
+                        echo '<div class="approved_note" style="background-color: #00AB41; border: 1px solid #f5c6cb; color: #fff; padding: 15px; margin-bottom: 15px;">';
+                        echo '<strong>Approval Note:</strong>';
+                        echo '<p>' . $row['Message'] . '</p>';
+                        echo '</div>';
               } elseif ($row['status'] === 'Declined') {
                   echo '<div style="background-color: #ff0000; border: 1px solid #f5c6cb; color: #fff; padding: 15px; margin-bottom: 15px;">
-                            <strong>Declined:</strong> Unfortunately, your enrollment form has been declined.
+                            <strong>Declined:</strong> Unfortunately, your Application form has been declined.
                         </div>';
+
+                        echo '<div class="declined_note" style="background-color: #ff0000; border: 1px solid #f5c6cb; color: #fff; padding: 15px; margin-bottom: 15px;">';
+                        echo '<strong>Decline Note:</strong>';
+                        echo '<p>' . $row['Message'] . '</p>';
+                        echo '</div>';
               } else {
                   echo '<div style="background-color: #d6d8d9; border: 1px solid #c8cbcf; color: #000; padding: 15px; margin-bottom: 15px;">
-                            <strong>Info:</strong> Your enrollment status is Pending.
+                            <strong>Info:</strong> Your Application status is Pending.
                         </div>';
               }
             ?>
         </div>
+      
         
 
   <?php } ?>  
