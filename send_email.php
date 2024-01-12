@@ -1,4 +1,11 @@
 <?php
+// Include the necessary PHPMailer files
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
 // Establish a database connection
 $servername = "localhost";
 $username = "root";
@@ -16,40 +23,46 @@ if (isset($_POST['lrn']) && isset($_POST['schedule'])) {
     $lrn = $_POST['lrn'];
     $schedule = $_POST['schedule'];
 
-    // Fetch student gender using the LRN from the database
-    $genderSql = "SELECT gender FROM names WHERE lrn = $lrn";
-    $genderResult = $conn->query($genderSql);
+    // Fetch student email address using the LRN from the database
+    $emailSql = "SELECT email FROM names WHERE lrn = $lrn";
+    $emailResult = $conn->query($emailSql);
 
-    if ($genderResult && $genderRow = $genderResult->fetch_assoc()) {
-        $gender = $genderRow['gender'];
+    if ($emailResult && $emailRow = $emailResult->fetch_assoc()) {
+        $toEmail = $emailRow['email'];
 
-        // Count the number of students already assigned to the class for the given gender
-        $studentCountSql = "SELECT COUNT(*) AS student_count FROM class_list WHERE gender = '$gender'";
-        $studentCountResult = $conn->query($studentCountSql);
+        // Create a new PHPMailer instance
+        $mail = new PHPMailer(true);
 
-        if ($studentCountResult && $studentCountRow = $studentCountResult->fetch_assoc()) {
-            $studentCount = $studentCountRow['student_count'];
+        try {
+            // Set up SMTP
+            $mail->SMTPDebug = SMTP::DEBUG_OFF;
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'mit703843@gmail.com';
+            $mail->Password   = 'cznsikanzkvwpldk';
+            $mail->SMTPSecure = 'tls';
+            $mail->Port       = 587;
 
-            // Check if the limit has been reached
-            if ($studentCount < 40) {
-                // Insert the student into the class list
-                $insertStudentSql = "INSERT INTO class_list (lrn, gender, schedule) VALUES ($lrn, '$gender', '$schedule')";
-                $conn->query($insertStudentSql);
+            // Set up email content
+            $mail->setFrom('from@example.com', 'SCHEDULING');
+            $mail->addAddress($toEmail);
+            $mail->Subject = 'Meeting Schedule';
+            $mail->Body    = "Dear Student,\n\nWe have scheduled a face-to-face meeting with you on $schedule.Please bring all the requirements. \n\nBest regards,\nPitogo Senior High School";
 
-                echo 'Student added to the class list successfully!';
-            } else {
-                echo 'Class limit reached for this gender.';
-            }
-        } else {
-            echo 'Error counting students: ' . $conn->error;
+            // Send the email
+            $mail->send();
+            echo 'Email has been sent successfully!';
+        } catch (Exception $e) {
+            echo 'Error sending email: ', $mail->ErrorInfo;
         }
     } else {
-        echo 'Student gender not found.';
+        echo 'Student email not found.';
     }
 } else {
     echo 'LRN or schedule parameters not set.';
 }
 
-// Close db conn
+// Close the database connection
 $conn->close();
 ?>
