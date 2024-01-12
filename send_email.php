@@ -44,11 +44,14 @@ if (isset($_POST['lrn']) && isset($_POST['schedule'])) {
             $mail->SMTPSecure = 'tls';
             $mail->Port       = 587;
 
+            // Convert the 24-hour time to 12-hour time format
+            $formattedSchedule = date('Y-m-d h:i A', strtotime($schedule));
+
             // Set up email content
             $mail->setFrom('from@example.com', 'SCHEDULING');
             $mail->addAddress($toEmail);
             $mail->Subject = 'Meeting Schedule';
-            $mail->Body    = "Dear Student,\n\nWe have scheduled a face-to-face meeting with you on $schedule.Please bring all the requirements. \n\nBest regards,\nPitogo Senior High School";
+            $mail->Body    = "Dear Student,\n\nWe have scheduled a face-to-face meeting with you on $formattedSchedule. Please bring all the requirements. \n\nBest regards,\nPitogo Senior High School";
 
             // Send the email
             $mail->send();
